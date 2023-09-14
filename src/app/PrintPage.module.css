@@ -1,0 +1,103 @@
+.page {
+  width: 10cm;
+  height: 2.8cm;
+  display: block;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  box-sizing: border-box;
+  background-color: white;
+  position: relative;
+  margin-top: 2px;
+  page-break-after: always;
+}
+.page::before {
+  content: "";
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  border-left: 1px dotted black;
+}
+.qrCode {
+  position: absolute;
+  display: flex;
+  top: 55%;
+  left: 5%;
+  height: 40%;
+}
+.qrCode2 {
+  position: absolute;
+  display: flex;
+  top: 55%;
+  left: 25%;
+  height: 40%;
+}
+.qrCode3 {
+  position: absolute;
+  display: flex;
+  top: 55%;
+  right: 25%;
+  height: 40%;
+}
+.qrCode4 {
+  position: absolute;
+  display: flex;
+  top: 55%;
+  right: 3%;
+  height: 40%;
+}
+.tastNumberAgent {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  text-align: left;
+  display: flex;
+}
+
+.assignSwatId {
+  position: absolute;
+  top: 5%;
+  right: 2%;
+  text-align: right;
+  display: flex;
+}
+.barcodeId {
+  position: absolute;
+  left: 5%;
+  top: 30%;
+  text-align: left;
+  display: flex;
+}
+.taskNumber {
+  position: absolute;
+  top: 30%;
+  text-align: right;
+  display: flex;
+  right: 2%;
+}
+.laundrySector {
+  position: absolute;
+  right: 22%;
+  top: 30%;
+  text-align: right;
+  display: flex;
+  font-size: 14px;
+}
+.nextStep {
+  position: absolute;
+  right: 34%;
+  top: 38%;
+  text-align: right;
+  display: flex;
+  font-size: 12px;
+}
+
+@media print {
+  /* 헤더와 푸터를 제거하는 스타일 */
+  @page {
+    margin: 0;
+  }
+}

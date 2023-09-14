@@ -1,119 +1,189 @@
-"use client"
+// "use client";
+// import { useEffect, useState } from "react";
+// import styles from "./PrintPage.module.css";
+// import Image from "next/image";
 
-import { useEffect } from 'react';
+// type Props = {
+//   info: {
+//     host: string;
+//     barcodeId: string;
+//     qrCode: string;
+//     nextStep: string;
+//     premium: string;
+//     taskNumber: string;
+//     assignSwatId: string;
+//     koName: string;
+//     laundrySector: string;
+//   };
+// };
 
-const PrintPage = () => {
-  useEffect(() => {
-    let data;
-    let host;
+// function PrintPage({ info }: Props) {
+//   const [itemInfo, setItemInfo] = useState(null);
 
-    window.parent.addEventListener('keyup', (e) => {
-      console.log(e.keyCode);
-      if (e.keyCode === 81) {
-        window.parent.postMessage({ receive: 'washingComplete' }, '*');
-      } else if (e.keyCode === 49) {
-        window.parent.postMessage({ receive: 'washingComplete' }, '*');
-      } else if (e.keyCode === 50) {
-        window.parent.postMessage({ receive: 'reLaundry' }, '*');
-      } else if (e.keyCode === 51) {
-        window.parent.postMessage({ receive: 'repairNeeded' }, '*');
-      }
-    });
+//   const handleKeyUp = (e: KeyboardEvent): void => {
+//     console.log(e.key);
+//     if (e.key === "q" || e.key === "1") {
+//       window.parent.postMessage({ receive: "washingComplete" }, "*");
+//     } else if (e.key === "2") {
+//       window.parent.postMessage({ receive: "reLaundry" }, "*");
+//     } else if (e.key === "3") {
+//       window.parent.postMessage({ receive: "repairNeeded" }, "*");
+//     }
+//   };
 
-    window.addEventListener('message', receiveMessage); // 메세지 받기
+//   useEffect(() => {
+//     let data;
+//     let host: string;
 
-    function receiveMessage(e) {
-      if (e.data.type === 'createPage') {
-        host = e.data.host;
-        document.body.innerHTML = '';
-        data = e.data.data;
-        const page = createPage(data);
-        document.body.appendChild(page);
-      }
-    }
+//     window.parent.addEventListener("keyup", handleKeyUp);
 
-    function createPage(item) {
-      const page = document.createElement('div');
-      page.className = 'page';
+//     window.addEventListener("message", receiveMessage); // 메세지 받기
 
-      const qrCode = document.createElement('div');
-      qrCode.className = 'qrCode';
+//     function receiveMessage(e: {
+//       data: { type: string; host: string; data: any };
+//     }) {
+//       if (e.data.type === "createPage") {
+//         host = e.data.host;
+//         document.body.innerHTML = "";
+//         data = e.data.data;
+//         const page = createPage(data);
+//         document.body.appendChild(page);
+//       }
+//     }
 
-      const qr = document.createElement('img');
-      qr.src = `https://${host}/support/qrCode/${item.qrCode}/H`;
-      qrCode.appendChild(qr);
+//     host = info.host;
+//     document.body.innerHTML = "";
+//     data = {
+//       barcodeId: info.barcodeId,
+//       qrCode: info.qrCode,
+//       nextStep: info.nextStep,
+//       premium: info.premium,
+//       taskNumber: info.taskNumber,
+//       assignSwatId: info.assignSwatId,
+//       koName: info.koName,
+//       laundrySector: info.laundrySector,
+//     };
+//     const page = createPage(data);
+//     document.body.appendChild(page);
 
-      const qrCode2 = qrCode.cloneNode(true);
-      qrCode2.className = 'qrCode2';
+//     function createPage(item: {
+//       qrCode: string;
+//       taskNumber: string;
+//       assignSwatId: string;
+//       koName: string;
+//       premium: string;
+//       barcodeId: string;
+//       nextStep: string;
+//       laundrySector: string;
+//     }) {
+//       const page = document.createElement("div");
+//       page.className = styles.page;
 
-      const qrCode3 = qrCode.cloneNode(true);
-      qrCode3.className = 'qrCode3';
+//       const qrCode = document.createElement("div");
+//       qrCode.className = styles.qrCode;
 
-      const qrCode4 = qrCode.cloneNode(true);
-      qrCode4.className = 'qrCode4';
+//       const qr = document.createElement("img");
+//       qr.src = `https://${host}/support/qrCode/${item.qrCode}/H`;
+//       qrCode.appendChild(qr);
 
-      const tastNumberAgent = document.createElement('div');
-      tastNumberAgent.className = 'tastNumberAgent';
-      tastNumberAgent.innerHTML = `<div>${item.taskNumber} / ${item.assignSwatId}</div>`;
+//       const qrCode2 = qrCode.cloneNode(true) as HTMLDivElement;
+//       qrCode2.className = styles.qrCode2;
 
-      const assignSwatId = document.createElement('div');
-      assignSwatId.className = 'assignSwatId';
-      assignSwatId.innerHTML = `<div>${item.koName} / ${item.assignSwatId}</div>`;
+//       const qrCode3 = qrCode.cloneNode(true) as HTMLDivElement;
+//       qrCode3.className = styles.qrCode3;
 
-      const barcodeId = document.createElement('div');
-      barcodeId.className = 'barcodeId';
-      barcodeId.innerHTML = `<div>${item.premium}${item.barcodeId}</div>`;
+//       const qrCode4 = qrCode.cloneNode(true) as HTMLDivElement;
+//       qrCode4.className = styles.qrCode4;
 
-      const taskNumber = document.createElement('div');
-      taskNumber.className = 'taskNumber';
-      taskNumber.innerHTML = `<div>/${item.taskNumber}${item.premium}</div>`;
+//       const tastNumberAgent = document.createElement("div");
+//       tastNumberAgent.className = styles.tastNumberAgent;
+//       tastNumberAgent.innerHTML = `<div>${item.taskNumber} / ${item.assignSwatId}</div>`;
 
-      const nextStep = document.createElement('div');
-      nextStep.className = 'nextStep';
-      nextStep.innerHTML = `<div>${item.nextStep}</div>`;
+//       const assignSwatId = document.createElement("div");
+//       assignSwatId.className = styles.assignSwatId;
+//       assignSwatId.innerHTML = `<div>${item.koName} / ${item.assignSwatId}</div>`;
 
-      const laundrySector = document.createElement('div');
-      laundrySector.className = 'laundrySector';
-      laundrySector.innerHTML = `<div>${item.laundrySector}</div>`;
+//       const barcodeId = document.createElement("div");
+//       barcodeId.className = styles.barcodeId;
+//       barcodeId.innerHTML = `<div>${item.premium}${item.barcodeId}</div>`;
 
-      if (item.premium === '') {
-        laundrySector.style.right = '18%';
-      }
+//       const taskNumber = document.createElement("div");
+//       taskNumber.className = styles.taskNumber;
+//       taskNumber.innerHTML = `<div>/${item.taskNumber}${item.premium}</div>`;
 
-      page.appendChild(qrCode);
-      page.appendChild(qrCode2);
-      page.appendChild(qrCode3);
-      page.appendChild(qrCode4);
-      page.appendChild(tastNumberAgent);
-      page.appendChild(assignSwatId);
-      page.appendChild(barcodeId);
-      page.appendChild(taskNumber);
-      page.appendChild(nextStep);
-      page.appendChild(laundrySector);
+//       const nextStep = document.createElement("div");
+//       nextStep.className = styles.nextStep;
+//       nextStep.innerHTML = `<div>${item.nextStep}</div>`;
 
-      qr.onload = checkLoaded;
+//       const laundrySector = document.createElement("div");
+//       laundrySector.className = styles.laundrySector;
+//       laundrySector.innerHTML = `<div>${item.laundrySector}</div>`;
 
-      return page;
-    }
+//       if (item.premium === "") {
+//         laundrySector.style.right = "18%";
+//       }
 
-    function checkLoaded() {
-      window.print();
-      window.parent.postMessage({ receive: 'print' }, '*');
-    }
-  }, []);
+//       page.appendChild(qrCode);
+//       page.appendChild(qrCode2);
+//       page.appendChild(qrCode3);
+//       page.appendChild(qrCode4);
+//       page.appendChild(tastNumberAgent);
+//       page.appendChild(assignSwatId);
+//       page.appendChild(barcodeId);
+//       page.appendChild(taskNumber);
+//       page.appendChild(nextStep);
+//       page.appendChild(laundrySector);
 
-  // You can replace this with your actual data
-  const item = {
-    koName: '페이지',
-    taskNumber: 11147,
-    assignSwatId: '2023_A',
-    barcodeId: '810-9-99999',
-    qrCode: '810999999',
-    nextStep: '',
-    premium: '',
-  };
+//       qr.onload = checkLoaded;
 
-  return <div>Print Page</div>; // Change this to your actual content
-};
+//       return page;
+//     }
 
-export default PrintPage;
+//     // 컴포넌트 언마운트 시 리스너 제거
+//     return () => {
+//       window.parent.removeEventListener("keyup", handleKeyUp);
+//     };
+//   }, [
+//     info.assignSwatId,
+//     info.barcodeId,
+//     info.host,
+//     info.koName,
+//     info.laundrySector,
+//     info.nextStep,
+//     info.premium,
+//     info.qrCode,
+//     info.taskNumber,
+//   ]);
+
+//   function checkLoaded() {
+//     window.print();
+//     console.log("print");
+//     window.parent.postMessage({ receive: "print" }, "*");
+//   }
+
+//   // You can replace this with your actual data
+//   // const item = {
+//   //   koName: "페이지",
+//   //   taskNumber: 11147,
+//   //   assignSwatId: "2023_A",
+//   //   barcodeId: "810-9-99999",
+//   //   qrCode: "810999999",
+//   //   nextStep: "",
+//   //   premium: "",
+//   // };
+
+//   return (
+//     <div className={styles.page}>
+//       <div className={styles.qrCode}>
+//         <Image
+//           src={`https://bo-devel.washswat.com/support/qrCode/${item.qrCode}/H`}
+//           width={120}
+//           height={120}
+//           alt="qrCode"
+//         ></Image>
+//       </div>
+//     </div>
+//   ); // Change this to your actual content
+// }
+
+// export default PrintPage;
